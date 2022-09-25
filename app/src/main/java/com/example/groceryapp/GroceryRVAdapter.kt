@@ -1,5 +1,6 @@
 package com.example.groceryapp
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 
 class GroceryRVAdapter(
     var list: List<GroceryItems>,
-    val groceryItemClickInterface: GroceryItemClickInterface
+    private val groceryItemClickInterface: GroceryItemClickInterface
     ): RecyclerView.Adapter<GroceryRVAdapter. GroceryViewHolder>() {
 
     inner class GroceryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameTV = itemView.findViewById<TextView>(R.id.idTVItemName)
-        val quantityTV = itemView.findViewById<TextView>(R.id.idTVQuantity)
-        val rateTV = itemView.findViewById<TextView> (R.id.idTVRate)
-        val amountTV = itemView.findViewById<TextView>(R.id.idTVTotalAmt)
-        val deleteIV = itemView.findViewById<ImageView>(R.id.idIVDelete)
+        val nameTV: TextView = itemView.findViewById(R.id.idTVItemName)
+        val quantityTV: TextView = itemView.findViewById(R.id.idTVQuantity)
+        val rateTV: TextView = itemView.findViewById(R.id.idTVRate)
+        val amountTV: TextView = itemView.findViewById(R.id.idTVTotalAmt)
+        val deleteIV: ImageView = itemView.findViewById(R.id.idIVDelete)
     }
 
     interface GroceryItemClickInterface {
@@ -28,14 +29,15 @@ class GroceryRVAdapter(
         val view = LayoutInflater.from(parent.context) . inflate(R.layout.grocery_rv_item, parent, false)
         return GroceryViewHolder(view)
     }
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: GroceryViewHolder, position: Int){
-        holder.nameTV.text = list.get(position).itemName
-        holder.quantityTV.text = list.get(position).itemQuantity.toString()
-        holder.rateTV.text = "Rs. " + list.get(position).itemPrice.toString()
-        val itemTotal: Int = list.get(position).itemPrice * list.get(position).itemQuantity
-        holder.amountTV.text = "Rs. " + itemTotal.toString()
+        holder.nameTV.text = list[position].itemName
+        holder.quantityTV.text = list[position].itemQuantity.toString()
+        holder.rateTV.text = "Rs. " + list[position].itemPrice.toString()
+        val itemTotal: Int = list[position].itemPrice * list[position].itemQuantity
+        holder.amountTV.text = "Rs. $itemTotal"
         holder.deleteIV.setOnClickListener {
-            groceryItemClickInterface.onItemClick(list.get(position))
+            groceryItemClickInterface.onItemClick(list[position])
         }
     }
     override fun getItemCount(): Int {

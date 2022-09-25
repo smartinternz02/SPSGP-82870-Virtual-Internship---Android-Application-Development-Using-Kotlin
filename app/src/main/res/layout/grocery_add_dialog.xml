@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Items to Cart"
+        android:text="@string/add_items_to_cart"
         android:textAllCaps="false"
         android:textAlignment="center"
         android:gravity="center"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             style="@style/TextInputEditTextTheme"
             android:layout_margin="5dp"
-            android:hint="Enter Item Name"
+            android:hint="@string/enter_item_name"
             android:padding="5dp"
             android:textColorHint="@color/white"
             app:hintTextColor="@color/white"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             style="@style/TextInputEditTextTheme"
             android:layout_margin="5dp"
-            android:hint="Enter Item Quantity"
+            android:hint="@string/enter_item_quantity"
             android:padding="5dp"
             android:textColorHint="@color/white"
             app:hintTextColor="@color/white"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             style="@style/TextInputEditTextTheme"
             android:layout_margin="5dp"
-            android:hint="Enter Item Price"
+            android:hint="@string/enter_item_price"
             android:padding="5dp"
             android:textColorHint="@color/white"
             app:hintTextColor="@color/white"
@@ -100,8 +100,9 @@
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/custom_button_back"
-                android:text="Cancel"
-                android:textAllCaps="false" />
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                />
             <Button
                 android:id="@+id/idBtnAdd"
                 android:layout_width="0dp"
@@ -109,8 +110,9 @@
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:background ="@drawable/custom_button_back"
-                android:text="Add"
-                android:textAllCaps="false"/>
+                android:text="@string/add"
+                android:textAllCaps="false"
+                />
         </LinearLayout>
     </LinearLayout>
     </RelativeLayout>

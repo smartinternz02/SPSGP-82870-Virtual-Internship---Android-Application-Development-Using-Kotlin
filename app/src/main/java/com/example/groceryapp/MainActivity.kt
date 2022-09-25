@@ -1,5 +1,6 @@
 package com.example.groceryapp
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,33 +13,35 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity(), GroceryRVAdapter.GroceryItemClickInterface {
-    lateinit var itemsRV: RecyclerView
-    lateinit var addFAB: FloatingActionButton
-    lateinit var list: List<GroceryItems>
-    lateinit var groceryRVAdapter: GroceryRVAdapter
-    lateinit var groceryViewModel: GroceryViewModel
+    private lateinit var itemsRV: RecyclerView
+    private lateinit var addFAB: FloatingActionButton
+    private lateinit var list: List<GroceryItems>
+    private lateinit var groceryRVAdapter: GroceryRVAdapter
+    private lateinit var groceryViewModel: GroceryViewModel
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         itemsRV = findViewById(R.id.idRVItems)
         addFAB = findViewById(R.id.idFABAdd)
-        list = ArrayList<GroceryItems>()
+        list = ArrayList()
         groceryRVAdapter = GroceryRVAdapter(list, this)
         itemsRV.layoutManager = LinearLayoutManager(this)
         itemsRV.adapter = groceryRVAdapter
         val groceryRepository = GroceryRepository(GroceryDatabase(this))
         val factory = GroceryViewModelFactory(groceryRepository)
-        groceryViewModel = ViewModelProvider(this, factory).get(GroceryViewModel::class.java)
-        groceryViewModel.getAllGroceryItems().observe(this, {
+        groceryViewModel = ViewModelProvider(this, factory)[GroceryViewModel::class.java]
+        groceryViewModel.getAllGroceryItems().observe(this) {
             groceryRVAdapter.list = it
             groceryRVAdapter.notifyDataSetChanged()
-        })
+        }
         addFAB.setOnClickListener {
             openDialog()
         }
     }
 
-    fun openDialog(){
+    @SuppressLint("NotifyDataSetChanged")
+    private fun openDialog(){
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.grocery_add_dialog)
         val cancelBtn = dialog.findViewById<Button>(R.id.idBtnCancel)
@@ -71,6 +74,7 @@ class MainActivity : AppCompatActivity(), GroceryRVAdapter.GroceryItemClickInter
         }
         dialog.show()
     }
+    @SuppressLint("NotifyDataSetChanged")
     override fun onItemClick(groceryItems: GroceryItems) {
         groceryViewModel.delete(groceryItems)
         groceryRVAdapter.notifyDataSetChanged()
